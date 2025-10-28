@@ -1,0 +1,18 @@
+[
+  {
+    "id": "user-1",
+    "email": "admin@ecommerce.com",
+    "password": "$2a$10$DTDzN5sfOknkMzs9lQWkZuJxmQCA.H7hmiHlJYabBBlIyFh1eOxki",
+    "name": "Admin User",
+    "role": "admin",
+    "createdAt": "2025-10-27T19:15:55.699Z"
+  },
+  {
+    "id": "user-2",
+    "email": "user@example.com",
+    "password": "$2a$10$JU2xIB7BMDdj59lr95h1xeNNzTwz/ZEyn/jPeS7tJ5q/e0Tc4IDT6",
+    "name": "John Doe",
+    "role": "customer",
+    "createdAt": "2025-10-27T19:15:55.820Z"
+  }
+]

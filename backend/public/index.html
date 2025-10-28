@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Commerce System - Demo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .product-card { transition: transform 0.3s; }
+        .product-card:hover { transform: translateY(-5px); }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-4">
+            <div class="flex items-center justify-between h-16">
+                <div class="text-2xl font-bold text-blue-600">ShopHub</div>
+                <div class="flex items-center space-x-6">
+                    <a href="#" class="text-gray-700 hover:text-blue-600">Home</a>
+                    <a href="#products" class="text-gray-700 hover:text-blue-600">Products</a>
+                    <a href="#features" class="text-gray-700 hover:text-blue-600">Features</a>
+                    <button onclick="showLoginModal()" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">Login</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="bg-gradient-to-r from-blue-600 to-blue-800 text-white">
+        <div class="container mx-auto px-4 py-20">
+            <div class="max-w-2xl">
+                <h1 class="text-5xl font-bold mb-6">Welcome to ShopHub</h1>
+                <p class="text-xl mb-8 text-blue-100">
+                    Your complete e-commerce solution with modern features and beautiful design
+                </p>
+                <button onclick="loadProducts()" class="bg-white text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-blue-50">
+                    Browse Products
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Features Section -->
+    <div id="features" class="container mx-auto px-4 py-16">
+        <h2 class="text-3xl font-bold mb-8 text-center">System Features</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <div class="text-blue-600 text-4xl mb-4">🛍️</div>
+                <h3 class="text-xl font-semibold mb-2">Product Catalog</h3>
+                <p class="text-gray-600">Browse, search, and filter through products with ease</p>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <div class="text-blue-600 text-4xl mb-4">🛒</div>
+                <h3 class="text-xl font-semibold mb-2">Shopping Cart</h3>
+                <p class="text-gray-600">Add products, update quantities, and manage your cart</p>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <div class="text-blue-600 text-4xl mb-4">💳</div>
+                <h3 class="text-xl font-semibold mb-2">Secure Checkout</h3>
+                <p class="text-gray-600">Complete orders with shipping information</p>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <div class="text-blue-600 text-4xl mb-4">👤</div>
+                <h3 class="text-xl font-semibold mb-2">User Authentication</h3>
+                <p class="text-gray-600">Register, login, and manage your account</p>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <div class="text-blue-600 text-4xl mb-4">📦</div>
+                <h3 class="text-xl font-semibold mb-2">Order Tracking</h3>
+                <p class="text-gray-600">View your order history and status updates</p>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <div class="text-blue-600 text-4xl mb-4">⚙️</div>
+                <h3 class="text-xl font-semibold mb-2">Admin Dashboard</h3>
+                <p class="text-gray-600">Manage products, orders, and view statistics</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Products Section -->
+    <div id="products" class="bg-gray-100 py-16">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold mb-8">Featured Products</h2>
+            <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Products will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+        <div class="bg-white rounded-lg p-8 max-w-md w-full mx-4">
+            <h2 class="text-2xl font-bold mb-4">Login</h2>
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-sm font-semibold mb-2">Email</label>
+                    <input type="email" id="email" class="w-full px-4 py-2 border border-gray-300 rounded-lg" placeholder="admin@ecommerce.com">
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold mb-2">Password</label>
+                    <input type="password" id="password" class="w-full px-4 py-2 border border-gray-300 rounded-lg" placeholder="admin123">
+                </div>
+                <button onclick="login()" class="w-full bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">Login</button>
+                <button onclick="closeLoginModal()" class="w-full bg-gray-200 text-gray-800 px-4 py-2 rounded-lg hover:bg-gray-300">Cancel</button>
+            </div>
+            <div class="mt-4 p-4 bg-gray-50 rounded">
+                <p class="text-sm text-gray-600 font-semibold mb-2">Demo Credentials:</p>
+                <p class="text-sm text-gray-600">Admin: admin@ecommerce.com / admin123</p>
+                <p class="text-sm text-gray-600">User: user@example.com / user123</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Load products from API
+        async function loadProducts() {
+            try {
+                const response = await fetch('/api/products?featured=true');
+                const products = await response.json();
+                displayProducts(products);
+                document.getElementById('products').scrollIntoView({ behavior: 'smooth' });
+            } catch (error) {
+                console.error('Error loading products:', error);
+            }
+        }
+
+        function displayProducts(products) {
+            const grid = document.getElementById('product-grid');
+            grid.innerHTML = products.map(product => `
+                <div class="product-card bg-white rounded-lg shadow-md overflow-hidden">
+                    <img src="${product.image}" alt="${product.name}" class="w-full h-48 object-cover">
+                    <div class="p-4">
+                        <h3 class="text-lg font-semibold mb-2">${product.name}</h3>
+                        <p class="text-gray-600 text-sm mb-3 line-clamp-2">${product.description}</p>
+                        <div class="flex items-center justify-between">
+                            <span class="text-2xl font-bold text-blue-600">$${product.price.toFixed(2)}</span>
+                            <button onclick="addToCart('${product.id}')" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+                                Add to Cart
+                            </button>
+                        </div>
+                        <p class="text-sm text-gray-500 mt-2">${product.stock} in stock</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function showLoginModal() {
+            document.getElementById('loginModal').classList.remove('hidden');
+            document.getElementById('loginModal').classList.add('flex');
+        }
+
+        function closeLoginModal() {
+            document.getElementById('loginModal').classList.add('hidden');
+            document.getElementById('loginModal').classList.remove('flex');
+        }
+
+        async function login() {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            try {
+                const response = await fetch('/api/auth/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password })
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    alert(`Login successful! Welcome ${data.user.name}!\\n\\nFull React app is building...`);
+                    closeLoginModal();
+                } else {
+                    alert('Login failed. Please check your credentials.');
+                }
+            } catch (error) {
+                console.error('Login error:', error);
+                alert('Login failed. Please try again.');
+            }
+        }
+
+        async function addToCart(productId) {
+            alert('Cart feature requires login. The full React app will have complete cart functionality!');
+        }
+
+        // Load products on page load
+        loadProducts();
+    </script>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8 mt-12">
+        <div class="container mx-auto px-4 text-center">
+            <p>&copy; 2024 E-Commerce System. All rights reserved.</p>
+            <p class="text-sm text-gray-400 mt-2">Full React application is being prepared...</p>
+        </div>
+    </footer>
+</body>
+</html>

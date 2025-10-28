@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - E-Commerce System</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .stat-card { transition: transform 0.3s; }
+        .stat-card:hover { transform: translateY(-5px); }
+        .sidebar-link { transition: all 0.3s; }
+        .sidebar-link:hover { background: rgba(59, 130, 246, 0.1); }
+        .sidebar-link.active { background: rgb(59, 130, 246); color: white; }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <div class="flex min-h-screen">
+        <!-- Sidebar -->
+        <div class="w-64 bg-gray-900 text-white">
+            <div class="p-6">
+                <h1 class="text-2xl font-bold text-blue-400">ShopHub Admin</h1>
+                <p class="text-gray-400 text-sm mt-1">Management Portal</p>
+            </div>
+            
+            <nav class="mt-6">
+                <a href="#" onclick="showSection('dashboard')" class="sidebar-link active flex items-center px-6 py-3">
+                    <span class="text-xl mr-3">📊</span>
+                    <span>Dashboard</span>
+                </a>
+                <a href="#" onclick="showSection('products')" class="sidebar-link flex items-center px-6 py-3">
+                    <span class="text-xl mr-3">📦</span>
+                    <span>Products</span>
+                </a>
+                <a href="#" onclick="showSection('orders')" class="sidebar-link flex items-center px-6 py-3">
+                    <span class="text-xl mr-3">🛒</span>
+                    <span>Orders</span>
+                </a>
+                <a href="#" onclick="showSection('customers')" class="sidebar-link flex items-center px-6 py-3">
+                    <span class="text-xl mr-3">👥</span>
+                    <span>Customers</span>
+                </a>
+                <a href="#" onclick="showSection('analytics')" class="sidebar-link flex items-center px-6 py-3">
+                    <span class="text-xl mr-3">📈</span>
+                    <span>Analytics</span>
+                </a>
+            </nav>
+
+            <div class="absolute bottom-0 w-64 p-6 border-t border-gray-700">
+                <div class="flex items-center">
+                    <div class="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center">
+                        <span class="text-white font-bold">A</span>
+                    </div>
+                    <div class="ml-3">
+                        <p class="text-sm font-semibold" id="adminName">Admin User</p>
+                        <p class="text-xs text-gray-400">Administrator</p>
+                    </div>
+                </div>
+                <button onclick="logout()" class="mt-4 w-full bg-red-600 hover:bg-red-700 text-white py-2 rounded text-sm">
+                    Logout
+                </button>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex-1">
+            <!-- Header -->
+            <div class="bg-white shadow-sm border-b">
+                <div class="px-8 py-4 flex items-center justify-between">
+                    <div>
+                        <h2 class="text-2xl font-bold text-gray-800" id="pageTitle">Dashboard Overview</h2>
+                        <p class="text-gray-600 text-sm" id="pageSubtitle">Welcome back! Here's what's happening today.</p>
+                    </div>
+                    <div class="text-sm text-gray-600">
+                        <span id="currentDate"></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dashboard Content -->
+            <div class="p-8">
+                <!-- Dashboard Section -->
+                <div id="dashboardSection" class="section">
+                    <!-- Stats Grid -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                        <div class="stat-card bg-white rounded-lg shadow-md p-6">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-gray-600 text-sm">Total Revenue</p>
+                                    <p class="text-3xl font-bold text-blue-600 mt-2" id="totalRevenue">$0.00</p>
+                                    <p class="text-green-500 text-sm mt-2">↑ 12% from last month</p>
+                                </div>
+                                <div class="bg-blue-100 p-4 rounded-full">
+                                    <span class="text-3xl">💰</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="stat-card bg-white rounded-lg shadow-md p-6">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-gray-600 text-sm">Total Orders</p>
+                                    <p class="text-3xl font-bold text-green-600 mt-2" id="totalOrders">0</p>
+                                    <p class="text-green-500 text-sm mt-2">↑ 8% from last month</p>
+                                </div>
+                                <div class="bg-green-100 p-4 rounded-full">
+                                    <span class="text-3xl">🛒</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="stat-card bg-white rounded-lg shadow-md p-6">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-gray-600 text-sm">Total Customers</p>
+                                    <p class="text-3xl font-bold text-purple-600 mt-2" id="totalUsers">0</p>
+                                    <p class="text-green-500 text-sm mt-2">↑ 15% from last month</p>
+                                </div>
+                                <div class="bg-purple-100 p-4 rounded-full">
+                                    <span class="text-3xl">👥</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="stat-card bg-white rounded-lg shadow-md p-6">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-gray-600 text-sm">Total Products</p>
+                                    <p class="text-3xl font-bold text-orange-600 mt-2" id="totalProducts">0</p>
+                                    <p class="text-blue-500 text-sm mt-2">3 added this week</p>
+                                </div>
+                                <div class="bg-orange-100 p-4 rounded-full">
+                                    <span class="text-3xl">📦</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Charts Row -->
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+                        <!-- Recent Orders -->
+                        <div class="bg-white rounded-lg shadow-md p-6">
+                            <h3 class="text-lg font-bold mb-4">Recent Orders</h3>
+                            <div id="recentOrders" class="space-y-3">
+                                <!-- Orders will be loaded here -->
+                            </div>
+                        </div>
+
+                        <!-- Order Status -->
+                        <div class="bg-white rounded-lg shadow-md p-6">
+                            <h3 class="text-lg font-bold mb-4">Orders by Status</h3>
+                            <div id="ordersByStatus" class="space-y-3">
+                                <!-- Status bars will be loaded here -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Top Products -->
+                    <div class="bg-white rounded-lg shadow-md p-6">
+                        <h3 class="text-lg font-bold mb-4">Top Products</h3>
+                        <div id="topProducts" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                            <!-- Top products will be loaded here -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Products Section -->
+                <div id="productsSection" class="section hidden">
+                    <div class="flex justify-between items-center mb-6">
+                        <div>
+                            <h3 class="text-xl font-bold">Product Management</h3>
+                            <p class="text-gray-600 text-sm">Manage your product inventory</p>
+                        </div>
+                        <button onclick="showAddProduct()" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg flex items-center">
+                            <span class="mr-2">➕</span> Add Product
+                        </button>
+                    </div>
+                    <div id="productsGrid" class="space-y-4">
+                        <!-- Products will be loaded here -->
+                    </div>
+                </div>
+
+                <!-- Orders Section -->
+                <div id="ordersSection" class="section hidden">
+                    <h3 class="text-xl font-bold mb-6">Order Management</h3>
+                    <div id="ordersTable" class="bg-white rounded-lg shadow-md overflow-hidden">
+                        <!-- Orders table will be loaded here -->
+                    </div>
+                </div>
+
+                <!-- Customers Section -->
+                <div id="customersSection" class="section hidden">
+                    <h3 class="text-xl font-bold mb-6">Customer Management</h3>
+                    <div id="customersTable" class="bg-white rounded-lg shadow-md p-6">
+                        <!-- Customers will be loaded here -->
+                    </div>
+                </div>
+
+                <!-- Analytics Section -->
+                <div id="analyticsSection" class="section hidden">
+                    <h3 class="text-xl font-bold mb-6">Sales Analytics</h3>
+                    <div class="bg-white rounded-lg shadow-md p-6">
+                        <p class="text-gray-600">Advanced analytics coming soon...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let stats = null;
+        let products = [];
+        let orders = [];
+        let users = [];
+
+        // Update current date
+        document.getElementById('currentDate').textContent = new Date().toLocaleDateString('en-US', {
+            weekday: 'long',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        });
+
+        // Load dashboard data
+        async function loadDashboardData() {
+            try {
+                // Load stats
+                const statsResponse = await fetch('/api/users/stats');
+                stats = await statsResponse.json();
+                
+                document.getElementById('totalRevenue').textContent = '$' + (stats.totalRevenue || 0).toFixed(2);
+                document.getElementById('totalOrders').textContent = stats.totalOrders || 0;
+                document.getElementById('totalUsers').textContent = stats.totalUsers || 0;
+                document.getElementById('totalProducts').textContent = stats.totalProducts || 0;
+
+                // Load orders
+                const ordersResponse = await fetch('/api/orders');
+                orders = await ordersResponse.json();
+                displayRecentOrders();
+                displayOrdersByStatus();
+
+                // Load products
+                const productsResponse = await fetch('/api/products');
+                products = await productsResponse.json();
+                displayTopProducts();
+
+                // Load users
+                const usersResponse = await fetch('/api/users');
+                users = await usersResponse.json();
+
+            } catch (error) {
+                console.error('Failed to load dashboard data:', error);
+            }
+        }
+
+        function displayRecentOrders() {
+            const container = document.getElementById('recentOrders');
+            const recent = orders.slice(0, 5);
+            
+            if (recent.length === 0) {
+                container.innerHTML = '<p class="text-gray-500">No orders yet</p>';
+                return;
+            }
+
+            container.innerHTML = recent.map(order => `
+                <div class="flex items-center justify-between p-3 bg-gray-50 rounded">
+                    <div>
+                        <p class="font-semibold">#${order.id.slice(0, 8)}</p>
+                        <p class="text-sm text-gray-600">${order.userName || 'Customer'}</p>
+                    </div>
+                    <div class="text-right">
+                        <p class="font-bold text-blue-600">$${order.total.toFixed(2)}</p>
+                        <span class="text-xs px-2 py-1 rounded ${getStatusColor(order.status)}">${order.status}</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function displayOrdersByStatus() {
+            const container = document.getElementById('ordersByStatus');
+            if (!stats || !stats.ordersByStatus) return;
+
+            const statuses = Object.entries(stats.ordersByStatus);
+            const total = statuses.reduce((sum, [, count]) => sum + count, 0);
+
+            container.innerHTML = statuses.map(([status, count]) => {
+                const percentage = total > 0 ? (count / total * 100).toFixed(0) : 0;
+                return `
+                    <div>
+                        <div class="flex justify-between mb-1">
+                            <span class="text-sm font-medium capitalize">${status}</span>
+                            <span class="text-sm font-bold">${count} (${percentage}%)</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-2">
+                            <div class="bg-blue-600 h-2 rounded-full" style="width: ${percentage}%"></div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function displayTopProducts() {
+            const container = document.getElementById('topProducts');
+            const top = products.slice(0, 4);
+
+            container.innerHTML = top.map(product => `
+                <div class="bg-gray-50 rounded-lg p-4">
+                    <img src="${product.image}" alt="${product.name}" class="w-full h-32 object-cover rounded mb-2">
+                    <p class="font-semibold text-sm">${product.name}</p>
+                    <p class="text-blue-600 font-bold">$${product.price.toFixed(2)}</p>
+                    <p class="text-xs text-gray-500">${product.stock} in stock</p>
+                </div>
+            `).join('');
+        }
+
+        function getStatusColor(status) {
+            const colors = {
+                pending: 'bg-yellow-100 text-yellow-800',
+                processing: 'bg-blue-100 text-blue-800',
+                shipped: 'bg-purple-100 text-purple-800',
+                delivered: 'bg-green-100 text-green-800',
+                cancelled: 'bg-red-100 text-red-800'
+            };
+            return colors[status] || 'bg-gray-100 text-gray-800';
+        }
+
+        function showSection(section) {
+            // Hide all sections
+            document.querySelectorAll('.section').forEach(s => s.classList.add('hidden'));
+            
+            // Remove active class from all links
+            document.querySelectorAll('.sidebar-link').forEach(link => link.classList.remove('active'));
+            
+            // Show selected section
+            const sectionMap = {
+                dashboard: { id: 'dashboardSection', title: 'Dashboard Overview', subtitle: "Welcome back! Here's what's happening today." },
+                products: { id: 'productsSection', title: 'Products', subtitle: 'Manage your product inventory' },
+                orders: { id: 'ordersSection', title: 'Orders', subtitle: 'View and manage customer orders' },
+                customers: { id: 'customersSection', title: 'Customers', subtitle: 'View customer information' },
+                analytics: { id: 'analyticsSection', title: 'Analytics', subtitle: 'View detailed analytics and reports' }
+            };
+
+            const selected = sectionMap[section];
+            document.getElementById(selected.id).classList.remove('hidden');
+            document.getElementById('pageTitle').textContent = selected.title;
+            document.getElementById('pageSubtitle').textContent = selected.subtitle;
+            
+            // Add active class to clicked link
+            event.target.closest('.sidebar-link').classList.add('active');
+
+            // Load section data
+            if (section === 'products') loadProductsSection();
+            if (section === 'orders') loadOrdersSection();
+            if (section === 'customers') loadCustomersSection();
+        }
+
+        function loadProductsSection() {
+            const container = document.getElementById('productsGrid');
+            container.innerHTML = products.map(product => `
+                <div class="bg-white rounded-lg shadow-md p-4 flex items-center gap-4">
+                    <img src="${product.image}" alt="${product.name}" class="w-24 h-24 object-cover rounded">
+                    <div class="flex-1">
+                        <h4 class="font-bold">${product.name}</h4>
+                        <p class="text-sm text-gray-600">${product.description}</p>
+                        <div class="flex items-center gap-4 mt-2">
+                            <span class="text-blue-600 font-bold">$${product.price.toFixed(2)}</span>
+                            <span class="text-sm text-gray-500">Stock: ${product.stock}</span>
+                            <span class="text-xs bg-gray-100 px-2 py-1 rounded">${product.category}</span>
+                        </div>
+                    </div>
+                    <div class="flex gap-2">
+                        <button class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">Edit</button>
+                        <button class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded">Delete</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function loadOrdersSection() {
+            const container = document.getElementById('ordersTable');
+            container.innerHTML = `
+                <table class="w-full">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Order ID</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Customer</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Date</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Total</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200">
+                        ${orders.map(order => `
+                            <tr>
+                                <td class="px-6 py-4">#${order.id.slice(0, 8)}</td>
+                                <td class="px-6 py-4">${order.userName || 'Customer'}</td>
+                                <td class="px-6 py-4">${new Date(order.createdAt).toLocaleDateString()}</td>
+                                <td class="px-6 py-4 font-bold text-blue-600">$${order.total.toFixed(2)}</td>
+                                <td class="px-6 py-4">
+                                    <span class="px-3 py-1 rounded text-sm ${getStatusColor(order.status)}">${order.status}</span>
+                                </td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
+            `;
+        }
+
+        function loadCustomersSection() {
+            const container = document.getElementById('customersTable');
+            container.innerHTML = `
+                <table class="w-full">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Name</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Email</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Role</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Joined</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-200">
+                        ${users.map(user => `
+                            <tr>
+                                <td class="px-6 py-4">${user.name}</td>
+                                <td class="px-6 py-4">${user.email}</td>
+                                <td class="px-6 py-4">
+                                    <span class="px-3 py-1 rounded text-sm ${user.role === 'admin' ? 'bg-purple-100 text-purple-800' : 'bg-gray-100 text-gray-800'}">${user.role}</span>
+                                </td>
+                                <td class="px-6 py-4">${new Date(user.createdAt).toLocaleDateString()}</td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
+            `;
+        }
+
+        function showAddProduct() {
+            alert('Add product feature will open a modal form');
+        }
+
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                window.location.href = '/';
+            }
+        }
+
+        // Load data on page load
+        loadDashboardData();
+    </script>
+</body>
+</html>
